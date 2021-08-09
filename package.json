@@ -1,0 +1,25 @@
+{
+  "name": "node-thisorthat",
+  "version": "0.0.1-SNAPSHOT",
+  "description": "Choose one winner from several options",
+  "main": "src/main/resources/static/js/main.js",
+  "devDependencies": {
+    "eslint": "^7.32.0"
+  },
+  "scripts": {
+    "pretest": "npm run --silent lint",
+    "test": "npm run --silent tests-only",
+    "tests-only": "mocha src/main/resources/static/js/test/*.js --reporter spec",
+    "lint": "eslint src/main/resources/static/js/*.js src/main/resources/static/js/test/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arirhel/this-or-that.git"
+  },
+  "author": "Ari Rhel <ari.rhel@pm.me>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/arirhel/this-or-that/issues"
+  },
+  "homepage": "https://github.com/arirhel/this-or-that#readme"
+}
