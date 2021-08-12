@@ -1,8 +1,9 @@
-function setInnerHTMLValues(optionsDtoJs) {
-    document.getElementById("questionSpan").innerHTML = optionsDtoJs.question;
-    document.getElementById("optionsSpan").innerHTML = optionsDtoJs.options;
+"use strict";
+
+// ### Choosy class constructor
+function Choosy(init) {
+  let opts = init || {};
+  this.competitors = opts.competitors || [];
 }
 
-function choose(options) {
-    console.log(options)
-}
+module.exports = Choosy;

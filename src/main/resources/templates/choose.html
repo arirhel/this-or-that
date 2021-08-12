@@ -1,34 +1,31 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>This Or That</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <link th:href="@{/styles/main.css}" rel="stylesheet"/>
+  <title>This Or That</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <link th:href="@{/styles/main.css}" rel="stylesheet"/>
 </head>
+
+<!--Set JS variable from Java DTO with Thymeleaf-->
+<script th:inline="javascript">const optionsDtoJs = /*[[${optionsDto}]]*/</script>
+<!--Choosy JS module-->
 <script type="text/javascript" th:src="@{/js/main.js}"></script>
-<!--TOD0 when to use thymeleaf rendering for variables and when to use javascript variables?
-I'm thinking probably use javascript consistently after thymeleaf first renders the page.
-Just need to make sure it doesn't reload and reset the variable at some interval / for some reason
-
-<script>
-window.onload = function(){
-    var name = prompt("What's your name?");
-    var lengthOfName = name.length
-
-    document.getElementById('output').innerHTML = lengthOfName;
-};
-</script>
--->
-<script th:inline="javascript">
-    let optionsDtoJs = /*[[${optionsDto}]]*/;
+<!--Create Choosy instance to play our game: Load and track our choices-->
+<script type="text/javascript">
+let choosy;
+function bodyOnLoad(optionsDtoJs) {
+  document.getElementById("questionSpan").innerHTML = optionsDtoJs.question;
+  document.getElementById("optionsSpan").innerHTML = optionsDtoJs.options;
+  choosy = new Choosy({ competitors: optionsDtoJs.options });
+}
 </script>
 
-<body onload="setInnerHTMLValues(optionsDtoJs)">
-<!--TOD0 add error handling if not found -->
+<body onload="bodyOnLoad(optionsDtoJs)">
+
 <p>Hello! Your question is <b><span id="questionSpan"></span></b></p>
 <p>Your options are <span id="optionsSpan"></span></p>
 
-<button type="button" th:onclick="choose(optionsDtoJs.options)">Ready to play?</button>
+<button type="button" onclick="console.log(choosy.competitors)">Ready to play?</button>
 
 </body>
 </html>
