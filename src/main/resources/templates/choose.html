@@ -8,24 +8,16 @@
 
 <!--Set JS variable from Java DTO with Thymeleaf-->
 <script th:inline="javascript">const optionsDtoJs = /*[[${optionsDto}]]*/</script>
-<!--Choosy JS module-->
 <script type="text/javascript" th:src="@{/js/main.js}"></script>
-<!--Create Choosy instance to play our game: Load and track our choices-->
-<script type="text/javascript">
-let choosy;
-function bodyOnLoad(optionsDtoJs) {
-  document.getElementById("questionSpan").innerHTML = optionsDtoJs.question;
-  document.getElementById("optionsSpan").innerHTML = optionsDtoJs.options;
-  choosy = new Choosy({ competitors: optionsDtoJs.options });
-}
-</script>
 
 <body onload="bodyOnLoad(optionsDtoJs)">
 
 <p>Hello! Your question is <b><span id="questionSpan"></span></b></p>
-<p>Your options are <span id="optionsSpan"></span></p>
 
-<button type="button" onclick="console.log(choosy.competitors)">Ready to play?</button>
+<div id="arena" onload="createArenaHtml(competitors)">
+  <!--If only one competitor remains, display the winner-->
+  <!--Else if there are >1 competitors, display choose buttons-->
+</div>
 
 </body>
 </html>
