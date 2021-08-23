@@ -18,3 +18,7 @@ $ .\mvnw sonar:sonar -D sonar.host.url="http://localhost:9000" -D sonar.login=${
 ```
 
 Log in to http://localhost:9000 with `admin:admin`
+
+## Run mongodb
+
+`docker run -itd --publish 49154:27017 --name tot-mongo mongo:5.0.2`
