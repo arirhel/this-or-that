@@ -2,8 +2,10 @@ package com.arirhel.thisorthat;
 
 import com.arirhel.thisorthat.model.Candidate;
 import com.arirhel.thisorthat.model.Dilemma;
+import com.arirhel.thisorthat.model.User;
+import com.arirhel.thisorthat.model.UserRole;
 import com.arirhel.thisorthat.repository.DilemmaRepository;
-import com.arirhel.thisorthat.repository.UserRepository;
+import com.arirhel.thisorthat.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -11,18 +13,19 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
+import java.util.List;
 
 @Profile("local")
 @Component
 public class LocalDataLoader implements ApplicationRunner {
 
-    private final UserRepository userRepository;
+    private final UserService userService;
 
-    private final DilemmaRepository dilemmaRepository;
+    private final DilemmaRepository dilemmaRepository; // todo go through service instead
 
     @Autowired
-    public LocalDataLoader(UserRepository userRepository, DilemmaRepository dilemmaRepository) {
-        this.userRepository = userRepository;
+    public LocalDataLoader(UserService userService, DilemmaRepository dilemmaRepository) {
+        this.userService = userService;
         this.dilemmaRepository = dilemmaRepository;
     }
 
@@ -44,6 +47,16 @@ public class LocalDataLoader implements ApplicationRunner {
         dilemma.setCandidates(Arrays.asList(pa, sd, bc, bp, v));
         System.out.printf("Saving %s", dilemma);
         dilemmaRepository.save(dilemma);
+
+        User user = new User();
+        user.setId("6125402c73db7865061965fc");
+        user.setUsername("user");
+        user.setPassword("pass");
+        UserRole userRole = new UserRole();
+        userRole.setRole("USER");
+        user.setUserRoles(List.of(userRole));
+        System.out.printf("Saving %s", user);
+        userService.save(user);
     }
 
 }
