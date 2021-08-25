@@ -1,0 +1,42 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <title>Dilemma List</title>
+</head>
+
+<body>
+
+<h1>Dilemma List</h1>
+
+<table class="table">
+  <thead>
+  <tr>
+    <th>Question</th>
+    <th>Candidates</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:if="${dilemmas.empty}">
+    <td colspan="2">No dilemmas found <span th:text="${page}"></span></td>
+  </tr>
+  <tr th:each="dilemma : ${dilemmas}">
+    <td><span th:text="${dilemma.question}"></span></td>
+    <td>
+      <ul th:each="candidate : ${dilemma.candidates}">
+        <li th:text="${candidate.value}"></li>
+      </ul>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<p>Page <span th:text="${currentPage}"></span> of <span th:text="${ofPages}"></span></p>
+<span th:if="${currentPage} > 0">
+  <button>Back</button>
+</span>
+<span th:if="${currentPage} < ${ofPages}">
+  <button>Next</button>
+</span>
+
+</body>
+</html>
