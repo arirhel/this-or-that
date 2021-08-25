@@ -8,6 +8,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class DilemmaServiceImpl implements DilemmaService {
 
@@ -26,6 +28,11 @@ public class DilemmaServiceImpl implements DilemmaService {
     @Override
     public Page<Dilemma> findAll(int page, int size) {
         return dilemmaRepository.findAll(PageRequest.of(page, size));
+    }
+
+    @Override
+    public Optional<Dilemma> findById(String id) {
+        return dilemmaRepository.findById(id);
     }
 
 }

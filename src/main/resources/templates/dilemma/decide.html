@@ -1,0 +1,18 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <title>Dilemma Decide</title>
+</head>
+
+<body>
+
+<h1>Dilemma Decide</h1>
+
+<h3 th:text="${dilemma.question}"></h3>
+
+<ul th:each="candidate : ${dilemma.candidates}">
+  <li th:text="${candidate.value}"></li>
+</ul>
+
+</body>
+</html>
