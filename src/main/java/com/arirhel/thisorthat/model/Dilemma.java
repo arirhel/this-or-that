@@ -15,4 +15,6 @@ public class Dilemma {
 
     private List<Candidate> candidates;
 
+    // Consider adding a DilemmaDto and updating the DilemmaController when adding new fields
+
 }

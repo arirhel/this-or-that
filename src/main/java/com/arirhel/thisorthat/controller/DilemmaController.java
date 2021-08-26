@@ -42,7 +42,8 @@ public class DilemmaController {
         final Optional<Dilemma> optionalDilemma = dilemmaService.findById(id);
         if (optionalDilemma.isPresent()) {
             modelAndView.setViewName("dilemma/decide");
-            modelAndView.addObject("dilemma", optionalDilemma.get());
+            modelAndView.addObject("question", optionalDilemma.get().getQuestion());
+            modelAndView.addObject("candidates", optionalDilemma.get().getCandidates());
         } else {
             modelAndView.setViewName("dilemma/notfound");
             modelAndView.addObject("id", id);
