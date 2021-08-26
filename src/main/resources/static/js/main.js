@@ -1,52 +1,50 @@
+// ArenaRenderer creates HTML elements and appends them to the DOM based upon it's candidates list.
 "use strict";
 
-let competitors;
-
-function bodyOnLoad(optionsDtoJs) {
-  document.getElementById("questionSpan").innerHTML = optionsDtoJs.question;
-  competitors = optionsDtoJs.options;
-  createArena(competitors);
+// ### ArenaRenderer Class Constructor
+function ArenaRenderer(options) {
+  const opts = options || {};
+  // Name of the variable used with this constructor
+  this.ref = opts.ref;
+  // Id of the element to append the arena onto
+  this.arenaId = opts.arenaId;
+  // A list of candidates to for the arena
+  this.candidates = opts.candidates;
 }
 
-function createArena(competitors) {
-  const arena = document.getElementById("arena");
+ArenaRenderer.prototype.render = function() {
+  const arena = document.getElementById(this.arenaId)
   arena.innerHTML = "";
+  if (this.candidates.length == 0) {
+      // Error
+      arena.textContent = "Error: no candidates found";
+    } else if (this.candidates.length == 1) {
+      // Winner
+      arena.textContent = "Winner! " + this.candidates[0].value;
+    } else {
+      // Display the first two candidates in the list (roster)
+      let docFrag = document.createDocumentFragment();
+  
+      let button0 = document.createElement("button");
+      let button1 = document.createElement("button");
+  
+      button0.textContent = this.candidates[0].value;
+      button0.setAttribute("onclick", this.ref + ".eliminate(1)");
+  
+      button1.textContent = this.candidates[1].value;
+      button1.setAttribute("onclick", this.ref + ".eliminate(0)");
+  
+      docFrag.appendChild(button0);
+      docFrag.appendChild(button1);
 
-  // Create the "fighting" arena based on the competitors array
-  if (competitors.length == 0) {
-    // Error
-    arena.textContent = "Error";
-  } else if (competitors.length == 1) {
-    // Winner
-    arena.textContent = "Winner! " + competitors[0];
-  } else {
-    let docFrag = document.createDocumentFragment();
+      arena.appendChild(docFrag);
+    }
+};
 
-    let button0 = document.createElement("button");
-    let button1 = document.createElement("button");
+// On elimination, the loser is removed and the winner remains to face the next opponent
+ArenaRenderer.prototype.eliminate = function(index) {
+  this.candidates.splice(index, 1);
+  this.render();
+};
 
-    button0.textContent = competitors[0];
-    button0.setAttribute("onclick", "eliminate(competitors, 1)");
-
-    button1.textContent = competitors[1];
-    button1.setAttribute("onclick", "eliminate(competitors, 0)");
-
-    docFrag.appendChild(button0);
-    docFrag.appendChild(button1);
-
-    arena.appendChild(docFrag);
-  }
-}
-
-function eliminate(competitors, index) {
-  competitors.splice(index, 1);
-  createArena(competitors);
-}
-
-// ### Choosy class constructor
-//function Choosy(init) {
-//  let opts = init || {};
-//  this.competitors = opts.competitors || [];
-//}
-//
-//module.exports = Choosy;
+module.exports = ArenaRenderer;

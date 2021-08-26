@@ -1,18 +1,28 @@
 "use strict";
 
-const Choosy = require("../main.js");
+const ArenaRenderer = require("../main.js");
 const assert = require("assert");
 
-describe("Choosy", function () {
-  const init = { competitors: ["one", "two", "three"] }
+describe("ArenaRenderer", function () {
+  const options = {
+    ref: "arenaRenderer",
+    arenaId: "arena",
+    candidates: [
+      {value: "Physician Assistant"},
+      {value: "Software Developer"},
+      {value: "Bike Courier"},
+      {value: "Body Painter"},
+      {value: "Veterinarian"}
+    ]
+  }
 
-  let choosy;
+  let arenaRenderer;
   beforeEach(function() {
-    choosy = new Choosy(init)
+    arenaRenderer = new ArenaRenderer(options)
   })
 
   it("constructor", function () {
-    assert.equal(choosy.competitors, init.competitors)
+    assert.equal(arenaRenderer.candidates, options.candidates)
   });
 
 });
