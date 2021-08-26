@@ -2,8 +2,7 @@ package com.arirhel.thisorthat;
 
 import com.arirhel.thisorthat.model.Candidate;
 import com.arirhel.thisorthat.model.Dilemma;
-import com.arirhel.thisorthat.repository.DilemmaRepository;
-import com.arirhel.thisorthat.repository.UserRepository;
+import com.arirhel.thisorthat.service.DilemmaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -16,14 +15,11 @@ import java.util.Arrays;
 @Component
 public class LocalDataLoader implements ApplicationRunner {
 
-    private final UserRepository userRepository;
-
-    private final DilemmaRepository dilemmaRepository;
+    private final DilemmaService dilemmaService;
 
     @Autowired
-    public LocalDataLoader(UserRepository userRepository, DilemmaRepository dilemmaRepository) {
-        this.userRepository = userRepository;
-        this.dilemmaRepository = dilemmaRepository;
+    public LocalDataLoader(DilemmaService dilemmaService) {
+        this.dilemmaService = dilemmaService;
     }
 
     @Override
@@ -43,7 +39,7 @@ public class LocalDataLoader implements ApplicationRunner {
         v.setValue("Veterinarian");
         dilemma.setCandidates(Arrays.asList(pa, sd, bc, bp, v));
         System.out.printf("Saving %s", dilemma);
-        dilemmaRepository.save(dilemma);
+        dilemmaService.save(dilemma);
     }
 
 }
