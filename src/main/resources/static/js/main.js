@@ -1,39 +1,50 @@
+// ArenaRenderer creates HTML elements and appends them to the DOM based upon it's candidates list.
 "use strict";
 
-// Relies on a global variable, "candidates", that's set in Thymeleaf template
-// I would like to change that in the future.
-// Could create a class but the render and eliminate functions are sort of separate concerns.
-const elementId = "arena";
+// ### ArenaRenderer Class Constructor
+function ArenaRenderer(options) {
+  const opts = options || {};
+  // Name of the variable used with this constructor
+  this.ref = opts.ref;
+  // Id of the element to append the arena onto
+  this.arenaId = opts.arenaId;
+  // A list of candidates to for the arena
+  this.candidates = opts.candidates;
+}
 
-function renderArena() {
-  const arena = document.getElementById(elementId)
+ArenaRenderer.prototype.render = function() {
+  const arena = document.getElementById(this.arenaId)
   arena.innerHTML = "";
-  if (candidates.length == 0) {
+  if (this.candidates.length == 0) {
       // Error
       arena.textContent = "Error: no candidates found";
-    } else if (candidates.length == 1) {
+    } else if (this.candidates.length == 1) {
       // Winner
-      arena.textContent = "Winner! " + candidates[0].value;
+      arena.textContent = "Winner! " + this.candidates[0].value;
     } else {
+      // Display the first two candidates in the list (roster)
       let docFrag = document.createDocumentFragment();
   
       let button0 = document.createElement("button");
       let button1 = document.createElement("button");
   
-      button0.textContent = candidates[0].value;
-      button0.setAttribute("onclick", "eliminate(candidates, 1)");
+      button0.textContent = this.candidates[0].value;
+      button0.setAttribute("onclick", this.ref + ".eliminate(1)");
   
-      button1.textContent = candidates[1].value;
-      button1.setAttribute("onclick", "eliminate(candidates, 0)");
+      button1.textContent = this.candidates[1].value;
+      button1.setAttribute("onclick", this.ref + ".eliminate(0)");
   
       docFrag.appendChild(button0);
       docFrag.appendChild(button1);
 
       arena.appendChild(docFrag);
     }
-}
+};
 
-function eliminate(index) {
-  candidates.splice(index, 1);
-  renderArena()
-}
+// On elimination, the loser is removed and the winner remains to face the next opponent
+ArenaRenderer.prototype.eliminate = function(index) {
+  this.candidates.splice(index, 1);
+  this.render();
+};
+
+module.exports = ArenaRenderer;

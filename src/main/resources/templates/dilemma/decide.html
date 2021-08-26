@@ -8,29 +8,34 @@ This template differs from the others in this program. Here we use javascript to
   <title>Dilemma Decide</title>
 </head>
 
-<script th:inline="javascript">const candidates = /*[[${candidates}]]*/</script>
 <script type="text/javascript" th:src="@{/js/main.js}"></script>
+<script th:inline="javascript">
+const arenaRenderer = new ArenaRenderer({
+  ref: "arenaRenderer",
+  arenaId: "arena",
+  candidates: /*[[${candidates}]]*/
+});
+</script>
 
-<body onload="renderArena()">
+<body>
 
 <h1>Dilemma Decide</h1>
 
 <h3 th:text="${question}"></h3>
 
 <div id="arena">
+  <script>arenaRenderer.render();</script>
   <!--If zero candidates exist
     Error: no candidates found
   -->
-
 
   <!--Else If only one competitor remains
     Winner! Veterinarian
   -->
 
-
   <!--Else If there are >1 competitors, display choose buttons
-    <button onclick="eliminate(candidates, 1)">Physician Assistant</button>
-    <button onclick="eliminate(candidates, 0)">Software Developer</button>
+    <button onclick="arenaRenderer.eliminate(candidates, 1)">Physician Assistant</button>
+    <button onclick="arenaRenderer.eliminate(candidates, 0)">Software Developer</button>
   -->
 </div>
 
