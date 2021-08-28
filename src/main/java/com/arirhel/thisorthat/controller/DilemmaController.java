@@ -26,9 +26,9 @@ public class DilemmaController {
     }
 
     @PostMapping("/save")
-    public ModelAndView save(@ModelAttribute Dilemma form) {
-        System.out.println(form.toString());
-        return detail(form.getId()); // temporary
+    public String save(@ModelAttribute Dilemma form) {
+        System.out.println(form.toString()); // todo save
+        return "redirect:/dilemma/detail?id=" + form.getId();
     }
 
     @GetMapping("/list")
