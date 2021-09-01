@@ -1,0 +1,20 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:insert="fragments/general.html :: head"></head>
+
+<body>
+<header>
+  <nav th:insert="fragments/general.html :: navbar"></nav>
+  <h1>This or That</h1>
+  <p>An app to help you decide what you want</p>
+</header>
+
+<!-- todo link to add new -->
+
+<!-- todo retrieve featured dilemmas -->
+<p><a href="/dilemma/decide?id=6123d06dc0a7df67166b137f">What do I want to do for work?</a> The <i>Psychology Today</i> article,
+  <i><a href="https://www.psychologytoday.com/us/blog/how-do-life/202104/simple-potent-way-choose-career">
+    A Simple But Potent Way to Choose a Career
+  </a></i>, inspired this app.
+</p>
+</body>
