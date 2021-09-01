@@ -1,0 +1,20 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:fragment="head">
+  <title>This or That</title>
+  <meta charset="UTF-8" />
+  <link th:href="@{/styles/main.css}" rel="stylesheet">
+  <script type="text/javascript" th:src="@{/js/main.js}"></script>
+</head>
+
+<body>
+  <header>
+    <nav th:fragment="navbar">
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/dilemma/list">Dilemmas</a></li>
+      </ul>
+    </nav>
+  </header>
+</body>
+</html>
