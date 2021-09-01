@@ -1,12 +1,11 @@
 <html xmlns:th="http://www.thymeleaf.org">
-
-<head>
-  <title>Dilemma List</title>
-</head>
-
+<head th:insert="fragments/general.html :: head"></head>
 <body>
-
-<h1>Dilemma List</h1>
+<header>
+  <nav th:insert="fragments/general.html :: navbar"></nav>
+  <h1>Dilemma List</h1>
+  <p>A paginated list of all dilemmas in our database</p> <!--todo add "add new" page and link-->
+</header>
 
 <table class="table">
   <thead>
@@ -24,6 +23,7 @@
     <td><span th:text="${dilemma.question}"></span></td>
     <td><a th:href="@{/dilemma/decide?id={id}(id=${dilemma.id})}">Decide</a></td>
     <td><a th:href="@{/dilemma/detail?id={id}(id=${dilemma.id})}">Edit</a></td>
+    <!--todo add "date added" and sort by it-->
   </tr>
   </tbody>
 </table>

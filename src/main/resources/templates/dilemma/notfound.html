@@ -1,19 +1,13 @@
 <html xmlns:th="http://www.thymeleaf.org">
-
-<head>
-  <title>Dilemma Not Found</title>
-</head>
-
+<head th:insert="fragments/general.html :: head"></head>
 <body>
-
-<h1>Dilemma Not Found</h1>
-
-<p>No dilemma found with id <span th:text="${id}"></span></p>
-
+<header>
+  <nav th:insert="fragments/general.html :: navbar"></nav>
+  <h1>Dilemma Not Found</h1>
+  <p>No dilemma found with id <span th:text="${id}"></span></p>
+</header>
 <p>
   Please check out our existing <a href="/dilemma/list">Dilemma List</a>
 </p>
-
-
 </body>
 </html>

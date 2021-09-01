@@ -1,56 +1,57 @@
 <html xmlns:th="http://www.thymeleaf.org">
-
-<head>
-  <title>Dilemma Detail</title>
-</head>
-
-
+<head th:insert="fragments/general.html :: head"></head>
+<!--todo move this-->
+<!--Need to organize js into render and logic files and/or classes-->
 <script th:inline="javascript">
-  // Javascript to add new and remove inputs to the candidates form table.
-  "use strict";
-  const candidates = /*[[${candidates}]]*/
-  // We need to track this separately because the value of the candidates variable
-  // won't change as we add candidates; Only on form submit
-  let nextCandidateId = candidates.length;
+    // Javascript to add new and remove inputs to the candidates form table.
+    "use strict";
+    const candidates = /*[[${candidates}]]*/
+    // We need to track this separately because the value of the candidates variable
+    // won't change as we add candidates; Only on form submit
+    let nextCandidateId = candidates.length;
 
-  function renderNewCandidateInput() {
-    const tableBody = document.getElementById("candidates-table-body");
-    const docFrag = document.createDocumentFragment();
-    const tr = document.createElement("tr");
-    const td = document.createElement("td");
-    const input = document.createElement("input");
+    function renderNewCandidateInput() {
+      const tableBody = document.getElementById("candidates-table-body");
+      const docFrag = document.createDocumentFragment();
+      const tr = document.createElement("tr");
+      const td = document.createElement("td");
+      const input = document.createElement("input");
 
-    td.setAttribute("id", "candidates" + nextCandidateId)
+      td.setAttribute("id", "candidates" + nextCandidateId)
 
-    // Thymeleaf does some magical list binding with these id and value attributes
-    // List<Candidates> is nested in our Dilemma object
-    input.setAttribute("id", "candidates" + nextCandidateId + ".value");
-    input.setAttribute("name", "candidates[" + nextCandidateId + "].value");
+      // Thymeleaf does some magical list binding with these id and value attributes
+      // List<Candidates> is nested in our Dilemma object
+      input.setAttribute("id", "candidates" + nextCandidateId + ".value");
+      input.setAttribute("name", "candidates[" + nextCandidateId + "].value");
 
-    docFrag.appendChild(tr);
-    tr.appendChild(td);
-    td.appendChild(input);
+      docFrag.appendChild(tr);
+      tr.appendChild(td);
+      td.appendChild(input);
 
-    // NOTE appending the docFrag deletes everything from it
-    tableBody.appendChild(docFrag);
-    nextCandidateId++;
-  }
-
-  function deleteAllAddedInputs() {
-    for (let i = candidates.length; i < nextCandidateId; i++) {
-      deleteElement("candidates" + i );
+      // NOTE appending the docFrag deletes everything from it
+      tableBody.appendChild(docFrag);
+      nextCandidateId++;
     }
-    nextCandidateId = candidates.length;
-  }
 
-  function deleteElement(id) {
-      let element = document.getElementById(id);
-      element.parentNode.removeChild(element);
-  }
-</script>
+    function deleteAllAddedInputs() {
+      for (let i = candidates.length; i < nextCandidateId; i++) {
+        deleteElement("candidates" + i );
+      }
+      nextCandidateId = candidates.length;
+    }
 
+    function deleteElement(id) {
+        let element = document.getElementById(id);
+        element.parentNode.removeChild(element);
+    }
+
+  </script>
 <body>
-<h1>Dilemma Detail</h1>
+<header>
+  <nav th:insert="fragments/general.html :: navbar"></nav>
+  <h1>Dilemma Detail</h1>
+  <p>Update the question and candidates of this dilemma</p>
+</header>
 
 <form action="#" th:action="@{/dilemma/save}" th:object="${form}"
       method="post">

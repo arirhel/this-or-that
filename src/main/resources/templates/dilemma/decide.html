@@ -1,28 +1,23 @@
 <html xmlns:th="http://www.thymeleaf.org">
-
 <!--
 In this template we use javascript to render an arena where the user eliminates candidates from their dilemma until we eventually display a winner.
 -->
-
-<head>
-  <title>Dilemma Decide</title>
-</head>
-
-<script type="text/javascript" th:src="@{/js/main.js}"></script>
+<head th:insert="fragments/general.html :: head"></head>
 <script th:inline="javascript">
-const arenaRenderer = new ArenaRenderer({
-  ref: "arenaRenderer",
-  arenaId: "arena",
-  candidates: /*[[${candidates}]]*/
-});
+  const arenaRenderer = new ArenaRenderer({
+    ref: "arenaRenderer",
+    arenaId: "arena",
+    candidates: /*[[${candidates}]]*/
+  });
 </script>
-
 <body>
+<header>
+  <nav th:insert="fragments/general.html :: navbar"></nav>
+  <h1>Dilemma Decide</h1>
+  <p>Choose from the below options until one remains and is deemed the winner</p>
+</header>
 
-<h1>Dilemma Decide</h1>
-
-<h3 th:text="${question}"></h3>
-
+<h2 th:text="${question}"></h2>
 <div id="arena">
   <script>arenaRenderer.render();</script>
   <!--If zero candidates exist
@@ -38,6 +33,5 @@ const arenaRenderer = new ArenaRenderer({
     <button onclick="arenaRenderer.eliminate(candidates, 0)">Software Developer</button>
   -->
 </div>
-
 </body>
 </html>
