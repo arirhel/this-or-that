@@ -1,5 +1,6 @@
 package com.arirhel.thisorthat.controller;
 
+import com.arirhel.thisorthat.model.Candidate;
 import com.arirhel.thisorthat.model.Dilemma;
 import com.arirhel.thisorthat.service.DilemmaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.Collections;
 import java.util.Optional;
 
 @Controller
@@ -27,8 +29,8 @@ public class DilemmaController {
 
     @PostMapping("/save")
     public String save(@ModelAttribute Dilemma dilemma) {
-        Dilemma dilemma1 = dilemmaService.save(dilemma);
-        return "redirect:/dilemma/detail?id=" + dilemma1.getId();
+        final Dilemma dilemma1 = dilemmaService.save(dilemma);
+        return "redirect:/dilemma/decide?id=" + dilemma1.getId();
     }
 
     @GetMapping("/list")
@@ -44,13 +46,22 @@ public class DilemmaController {
         return modelAndView;
     }
 
+    @GetMapping("/create")
+    public ModelAndView create() {
+        final ModelAndView modelAndView = new ModelAndView("dilemma/detail");
+        modelAndView.addObject("form", new Dilemma()); // DTO for /save operation
+        // Placeholder to generate candidate inputs table
+        modelAndView.addObject("candidates", Collections.singletonList(new Candidate()));
+        return modelAndView;
+    }
+
     @GetMapping("/detail")
     public ModelAndView detail(@RequestParam(name = "id") String id) {
         final ModelAndView modelAndView = new ModelAndView();
         final Optional<Dilemma> optionalDilemma = dilemmaService.findById(id);
         if (optionalDilemma.isPresent()) {
             modelAndView.setViewName("dilemma/detail");
-            modelAndView.addObject("form", optionalDilemma.get());
+            modelAndView.addObject("form", optionalDilemma.get()); // DTO for /save operation
             modelAndView.addObject("id", optionalDilemma.get().getId());
             modelAndView.addObject("question", optionalDilemma.get().getQuestion());
             modelAndView.addObject("candidates", optionalDilemma.get().getCandidates());
