@@ -26,9 +26,9 @@ public class DilemmaController {
     }
 
     @PostMapping("/save")
-    public String save(@ModelAttribute Dilemma form) {
-        System.out.println(form.toString()); // todo save
-        return "redirect:/dilemma/detail?id=" + form.getId();
+    public String save(@ModelAttribute Dilemma dilemma) {
+        Dilemma dilemma1 = dilemmaService.save(dilemma);
+        return "redirect:/dilemma/detail?id=" + dilemma1.getId();
     }
 
     @GetMapping("/list")
