@@ -45,12 +45,13 @@
         element.parentNode.removeChild(element);
     }
 
-  </script>
+
+</script>
 <body>
 <header>
   <nav th:insert="fragments/general.html :: navbar"></nav>
   <h1>Dilemma Detail</h1>
-  <p>Update the question and candidates of this dilemma. To remove a candidate, clear the input and click save</p>
+  <p>Update the question and candidates of this dilemma. To remove a candidate, clear the field and click save</p>
 </header>
 
 <form action="#" th:action="@{/dilemma/save}" th:object="${form}"
@@ -59,13 +60,13 @@
     <input type="submit" id="submitButton" th:value="Save">
     <input type="reset" id="resetButton" name="reset" th:value="Reset" onclick="deleteAllAddedInputs()"/>
     <input type="text" id="id" th:field="*{id}" hidden>
-    <h2>Question</h2>
-    <input type="text" id="question" th:field="*{question}">
-    <h2>Candidates</h2>
+    <label>Question:
+      <input type="text" id="question" th:field="*{question}">
+    </label>
     <table>
       <thead>
       <tr>
-        <th></th>
+        <th>Candidates:</th>
       </tr>
       </thead>
       <tbody id="candidates-table-body">
