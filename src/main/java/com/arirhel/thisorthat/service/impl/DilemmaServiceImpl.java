@@ -3,12 +3,14 @@ package com.arirhel.thisorthat.service.impl;
 import com.arirhel.thisorthat.model.Dilemma;
 import com.arirhel.thisorthat.repository.DilemmaRepository;
 import com.arirhel.thisorthat.service.DilemmaService;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class DilemmaServiceImpl implements DilemmaService {
@@ -22,6 +24,9 @@ public class DilemmaServiceImpl implements DilemmaService {
 
     @Override
     public Dilemma save(Dilemma dilemma) {
+        dilemma.setCandidates(dilemma.getCandidates()
+          .stream().filter(candidate -> StringUtils.isNotBlank(candidate.getValue()))
+          .collect(Collectors.toList()));
         return dilemmaRepository.save(dilemma);
     }
 
