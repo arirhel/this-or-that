@@ -4,7 +4,7 @@
 <header>
   <nav th:insert="fragments/general.html :: navbar"></nav>
   <h1>Dilemma List</h1>
-  <p>A paginated list of all dilemmas in our database</p> <!--todo add "add new" page and link-->
+  <p>A paginated list of all dilemmas in our database</p>
 </header>
 
 <table class="table">
@@ -21,8 +21,8 @@
   </tr>
   <tr th:each="dilemma : ${dilemmas}">
     <td><span th:text="${dilemma.question}"></span></td>
-    <td><a th:href="@{/dilemma/decide?id={id}(id=${dilemma.id})}">Decide</a></td>
-    <td><a th:href="@{/dilemma/detail?id={id}(id=${dilemma.id})}">Edit</a></td>
+    <td><a th:href="@{/dilemma/decide(id=${dilemma.id})}">Decide</a></td>
+    <td><a th:href="@{/dilemma/detail(id=${dilemma.id})}">Edit</a></td>
     <!--todo add "date added" and sort by it-->
   </tr>
   </tbody>
@@ -30,10 +30,10 @@
 
 <p>Page <span th:text="${currentPage}"></span> of <span th:text="${ofPages}"></span></p>
 <span th:if="${currentPage} > 0">
-  <button >Back</button>
+  <a th:href="@{/dilemma/list(page=${currentPage} - 1,size=${size})}">Back</a>
 </span>
 <span th:if="${currentPage} < ${ofPages}">
-  <button>Next</button>
+  <a th:href="@{/dilemma/list(page=${currentPage} + 1,size=${size})}">Next</a>
 </span>
 
 </body>
