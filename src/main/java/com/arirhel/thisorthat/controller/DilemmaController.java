@@ -3,6 +3,7 @@ package com.arirhel.thisorthat.controller;
 import com.arirhel.thisorthat.model.Candidate;
 import com.arirhel.thisorthat.model.Dilemma;
 import com.arirhel.thisorthat.service.DilemmaService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -18,15 +19,13 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping("/dilemma")
+@RequiredArgsConstructor
 public class DilemmaController {
 
     private final DilemmaService dilemmaService;
 
-    @Autowired
-    public DilemmaController(DilemmaService dilemmaService) {
-        this.dilemmaService = dilemmaService;
-    }
-
+    // todo consider tradeoffs https://www.baeldung.com/spring-redirect-and-forward
+    // todo validations (>1 candidate, etc...)
     @PostMapping("/save")
     public String save(@ModelAttribute Dilemma dilemma) {
         final Dilemma dilemma1 = dilemmaService.save(dilemma);

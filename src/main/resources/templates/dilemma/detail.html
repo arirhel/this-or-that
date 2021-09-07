@@ -54,8 +54,7 @@
   <p>Update the question and candidates of this dilemma. To remove a candidate, clear the field and click save</p>
 </header>
 
-<form action="#" th:action="@{/dilemma/save}" th:object="${form}"
-      method="post">
+<form action="#" th:action="@{/dilemma/save}" th:object="${form}" method="post">
   <fieldset>
     <input type="submit" id="submitButton" th:value="Save">
     <input type="reset" id="resetButton" name="reset" th:value="Reset" onclick="deleteAllAddedInputs()"/>
