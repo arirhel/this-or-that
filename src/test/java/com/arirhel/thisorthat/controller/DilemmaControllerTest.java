@@ -116,7 +116,8 @@ class DilemmaControllerTest {
         assertNotNull(mav);
         assertEquals("dilemma/detail", mav.getViewName());
         assertEquals(new Dilemma(), mav.getModel().get("form"));
-        assertEquals(Collections.singletonList(new Candidate()), mav.getModel().get("candidates"));
+        assertEquals(Collections.singletonList(new Candidate()), mav.getModel().get("candidates"),
+          "Form generation depends on a list of at lease one candidate.");
     }
 
     @Test

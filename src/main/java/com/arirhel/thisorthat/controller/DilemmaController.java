@@ -69,8 +69,7 @@ public class DilemmaController {
     @GetMapping("/create")
     public ModelAndView create() {
         final ModelAndView modelAndView = new ModelAndView("dilemma/detail");
-        modelAndView.addObject(FORM, new Dilemma()); // DTO for /save operation
-        // Placeholder to generate candidate inputs table
+        modelAndView.addObject(FORM, new Dilemma());
         modelAndView.addObject(CANDIDATES, Collections.singletonList(new Candidate()));
         return modelAndView;
     }
@@ -81,7 +80,7 @@ public class DilemmaController {
         final Optional<Dilemma> optionalDilemma = dilemmaService.findById(id);
         if (optionalDilemma.isPresent()) {
             modelAndView.setViewName("dilemma/detail");
-            modelAndView.addObject(FORM, optionalDilemma.get()); // DTO for /save operation
+            modelAndView.addObject(FORM, optionalDilemma.get());
             modelAndView.addObject(ID, optionalDilemma.get().getId());
             modelAndView.addObject(QUESTION, optionalDilemma.get().getQuestion());
             modelAndView.addObject(CANDIDATES, optionalDilemma.get().getCandidates());
