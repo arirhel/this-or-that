@@ -38,7 +38,7 @@ public class DilemmaController {
      */
     private static final String CANDIDATES = "candidates";
     /**
-     * Thymeleaf model key for the DTO used for {@link this#save(Dilemma)}
+     * Thymeleaf model key for the DTO used in {@link DilemmaController#save(Dilemma)}
      */
     private static final String FORM = "form";
 
