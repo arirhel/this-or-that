@@ -4,7 +4,6 @@ import com.arirhel.thisorthat.model.Candidate;
 import com.arirhel.thisorthat.model.Dilemma;
 import com.arirhel.thisorthat.service.DilemmaService;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -18,14 +17,13 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.View;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.when;
@@ -38,10 +36,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class DilemmaControllerTest {
 
     @Autowired
-    private MockMvc mockMvc;
+    MockMvc mockMvc;
 
     @Autowired
-    private ObjectMapper objectMapper;
+    ObjectMapper objectMapper;
 
     @MockBean
     DilemmaService mockDilemmaService;
@@ -74,7 +72,7 @@ class DilemmaControllerTest {
 
         //then
         String redirectUrl = result.getResponse().getRedirectedUrl();
-        Assertions.assertEquals("/dilemma/decide?id=abc", redirectUrl);
+        assertEquals("/dilemma/decide?id=abc", redirectUrl);
     }
 
     @Test
@@ -97,12 +95,12 @@ class DilemmaControllerTest {
 
         //then
         ModelAndView mav = result.getModelAndView();
-        Assertions.assertNotNull(mav);
-        Assertions.assertEquals("dilemma/list", mav.getViewName());
-        Assertions.assertEquals(Collections.emptyList(), mav.getModel().get("dilemmas"));
-        Assertions.assertEquals(0, mav.getModel().get("currentPage"));
-        Assertions.assertEquals(10, mav.getModel().get("size"));
-        Assertions.assertEquals(0, mav.getModel().get("ofPages"));
+        assertNotNull(mav);
+        assertEquals("dilemma/list", mav.getViewName());
+        assertEquals(Collections.emptyList(), mav.getModel().get("dilemmas"));
+        assertEquals(0, mav.getModel().get("currentPage"));
+        assertEquals(10, mav.getModel().get("size"));
+        assertEquals(0, mav.getModel().get("ofPages"));
     }
 
     @Test
@@ -115,10 +113,10 @@ class DilemmaControllerTest {
 
         //then
         ModelAndView mav = result.getModelAndView();
-        Assertions.assertNotNull(mav);
-        Assertions.assertEquals("dilemma/detail", mav.getViewName());
-        Assertions.assertEquals(new Dilemma(), mav.getModel().get("form"));
-        Assertions.assertEquals(Collections.singletonList(new Candidate()), mav.getModel().get("candidates"));
+        assertNotNull(mav);
+        assertEquals("dilemma/detail", mav.getViewName());
+        assertEquals(new Dilemma(), mav.getModel().get("form"));
+        assertEquals(Collections.singletonList(new Candidate()), mav.getModel().get("candidates"));
     }
 
     @Test
@@ -135,9 +133,9 @@ class DilemmaControllerTest {
 
         //then
         ModelAndView mav = result.getModelAndView();
-        Assertions.assertNotNull(mav);
-        Assertions.assertEquals("dilemma/detail", mav.getViewName());
-        Assertions.assertEquals(mockDilemma, mav.getModel().get("form"));
+        assertNotNull(mav);
+        assertEquals("dilemma/detail", mav.getViewName());
+        assertEquals(mockDilemma, mav.getModel().get("form"));
     }
 
     @Test
@@ -154,9 +152,9 @@ class DilemmaControllerTest {
 
         //then
         ModelAndView mav = result.getModelAndView();
-        Assertions.assertNotNull(mav);
-        Assertions.assertEquals("dilemma/notfound", mav.getViewName());
-        Assertions.assertEquals("abc", mav.getModel().get("id"));
+        assertNotNull(mav);
+        assertEquals("dilemma/notfound", mav.getViewName());
+        assertEquals("abc", mav.getModel().get("id"));
     }
 
     @Test
@@ -175,10 +173,10 @@ class DilemmaControllerTest {
 
         //then
         ModelAndView mav = result.getModelAndView();
-        Assertions.assertNotNull(mav);
-        Assertions.assertEquals("dilemma/decide", mav.getViewName());
-        Assertions.assertEquals("A question?", mav.getModel().get("question"));
-        Assertions.assertEquals(candidates, mav.getModel().get("candidates"));
+        assertNotNull(mav);
+        assertEquals("dilemma/decide", mav.getViewName());
+        assertEquals("A question?", mav.getModel().get("question"));
+        assertEquals(candidates, mav.getModel().get("candidates"));
     }
 
     @Test
@@ -195,8 +193,8 @@ class DilemmaControllerTest {
 
         //then
         ModelAndView mav = result.getModelAndView();
-        Assertions.assertNotNull(mav);
-        Assertions.assertEquals("dilemma/notfound", mav.getViewName());
-        Assertions.assertEquals("abc", mav.getModel().get("id"));
+        assertNotNull(mav);
+        assertEquals("dilemma/notfound", mav.getViewName());
+        assertEquals("abc", mav.getModel().get("id"));
     }
 }
