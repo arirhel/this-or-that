@@ -1,5 +1,6 @@
 package com.arirhel.thisorthat.service.impl;
 
+import com.arirhel.thisorthat.model.Candidate;
 import com.arirhel.thisorthat.model.Dilemma;
 import com.arirhel.thisorthat.repository.DilemmaRepository;
 import com.arirhel.thisorthat.service.DilemmaService;
@@ -10,6 +11,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -26,11 +28,16 @@ public class DilemmaServiceImpl implements DilemmaService {
 
     @Override
     public Dilemma save(Dilemma dilemma) {
+        // This is important: It determines if MongoRepository generates an id
         if (StringUtils.isBlank(dilemma.getId())) dilemma.setId(null);
+        if (dilemma.getCandidates() != null) filterOutBlankCandidates(dilemma);
+        return dilemmaRepository.save(dilemma);
+    }
+
+    private void filterOutBlankCandidates(Dilemma dilemma) {
         dilemma.setCandidates(dilemma.getCandidates()
           .stream().filter(candidate -> StringUtils.isNotBlank(candidate.getValue()))
           .collect(Collectors.toList()));
-        return dilemmaRepository.save(dilemma);
     }
 
     @Override
