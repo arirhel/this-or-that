@@ -77,6 +77,8 @@
                 <configuration>
                     <excludes>
                         <exclude>com/arirhel/thisorthat/model/*</exclude>
+                        <exclude>com/arirhel/thisorthat/LocalDataLoader.class</exclude>
+                        <exclude>com/arirhel/thisorthat/ThisOrThatApplication.class</exclude>
                     </excludes>
                 </configuration>
                 <executions>
