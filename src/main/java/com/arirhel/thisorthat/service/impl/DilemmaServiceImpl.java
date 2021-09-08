@@ -1,6 +1,5 @@
 package com.arirhel.thisorthat.service.impl;
 
-import com.arirhel.thisorthat.model.Candidate;
 import com.arirhel.thisorthat.model.Dilemma;
 import com.arirhel.thisorthat.repository.DilemmaRepository;
 import com.arirhel.thisorthat.service.DilemmaService;
@@ -11,7 +10,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 

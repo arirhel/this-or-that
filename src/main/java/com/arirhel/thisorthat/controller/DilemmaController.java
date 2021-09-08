@@ -4,7 +4,6 @@ import com.arirhel.thisorthat.model.Candidate;
 import com.arirhel.thisorthat.model.Dilemma;
 import com.arirhel.thisorthat.service.DilemmaService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +21,27 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class DilemmaController {
 
+    /**
+     * Thymeleaf model key for a list of {@link Dilemma}s
+     */
+    private static final String DILEMMAS = "dilemmas";
+    /**
+     * Thymeleaf model key for an id
+     */
+    private static final String ID = "id";
+    /**
+     * Thymeleaf model key for {@link Dilemma#getQuestion()}
+     */
+    private static final String QUESTION = "question";
+    /**
+     *  Thymeleaf model key for a list of {@link Candidate}s
+     */
+    private static final String CANDIDATES = "candidates";
+    /**
+     * Thymeleaf model key for the DTO used for {@link this#save(Dilemma)}
+     */
+    private static final String FORM = "form";
+
     private final DilemmaService dilemmaService;
 
     // todo consider tradeoffs https://www.baeldung.com/spring-redirect-and-forward
@@ -38,7 +58,8 @@ public class DilemmaController {
       @RequestParam(name = "size", defaultValue = "10") int size) {
         final ModelAndView modelAndView = new ModelAndView("dilemma/list");
         final Page<Dilemma> dilemmaPage = dilemmaService.findAll(page, size);
-        modelAndView.addObject("dilemmas", dilemmaPage.getContent());
+        modelAndView.addObject(DILEMMAS, dilemmaPage.getContent());
+        // Spring Pageable params
         modelAndView.addObject("currentPage", dilemmaPage.getPageable().getPageNumber());
         modelAndView.addObject("size", dilemmaPage.getSize());
         modelAndView.addObject("ofPages", dilemmaPage.getTotalPages() - 1); // Offset for zero page
@@ -48,40 +69,40 @@ public class DilemmaController {
     @GetMapping("/create")
     public ModelAndView create() {
         final ModelAndView modelAndView = new ModelAndView("dilemma/detail");
-        modelAndView.addObject("form", new Dilemma()); // DTO for /save operation
+        modelAndView.addObject(FORM, new Dilemma()); // DTO for /save operation
         // Placeholder to generate candidate inputs table
-        modelAndView.addObject("candidates", Collections.singletonList(new Candidate()));
+        modelAndView.addObject(CANDIDATES, Collections.singletonList(new Candidate()));
         return modelAndView;
     }
 
     @GetMapping("/detail")
-    public ModelAndView detail(@RequestParam(name = "id") String id) {
+    public ModelAndView detail(@RequestParam(name = ID) String id) {
         final ModelAndView modelAndView = new ModelAndView();
         final Optional<Dilemma> optionalDilemma = dilemmaService.findById(id);
         if (optionalDilemma.isPresent()) {
             modelAndView.setViewName("dilemma/detail");
-            modelAndView.addObject("form", optionalDilemma.get()); // DTO for /save operation
-            modelAndView.addObject("id", optionalDilemma.get().getId());
-            modelAndView.addObject("question", optionalDilemma.get().getQuestion());
-            modelAndView.addObject("candidates", optionalDilemma.get().getCandidates());
+            modelAndView.addObject(FORM, optionalDilemma.get()); // DTO for /save operation
+            modelAndView.addObject(ID, optionalDilemma.get().getId());
+            modelAndView.addObject(QUESTION, optionalDilemma.get().getQuestion());
+            modelAndView.addObject(CANDIDATES, optionalDilemma.get().getCandidates());
         } else {
             modelAndView.setViewName("dilemma/notfound");
-            modelAndView.addObject("id", id);
+            modelAndView.addObject(ID, id);
         }
         return modelAndView;
     }
 
     @GetMapping("/decide")
-    public ModelAndView decide(@RequestParam(name = "id") String id) {
+    public ModelAndView decide(@RequestParam(name = ID) String id) {
         final ModelAndView modelAndView = new ModelAndView();
         final Optional<Dilemma> optionalDilemma = dilemmaService.findById(id);
         if (optionalDilemma.isPresent()) {
             modelAndView.setViewName("dilemma/decide");
-            modelAndView.addObject("question", optionalDilemma.get().getQuestion());
-            modelAndView.addObject("candidates", optionalDilemma.get().getCandidates());
+            modelAndView.addObject(QUESTION, optionalDilemma.get().getQuestion());
+            modelAndView.addObject(CANDIDATES, optionalDilemma.get().getCandidates());
         } else {
             modelAndView.setViewName("dilemma/notfound");
-            modelAndView.addObject("id", id);
+            modelAndView.addObject(ID, id);
         }
         return modelAndView;
     }

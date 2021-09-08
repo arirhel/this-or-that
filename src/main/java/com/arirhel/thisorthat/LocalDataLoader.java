@@ -38,7 +38,6 @@ public class LocalDataLoader implements ApplicationRunner {
         Candidate v = new Candidate();
         v.setValue("Veterinarian");
         dilemma.setCandidates(Arrays.asList(pa, sd, bc, bp, v));
-        System.out.printf("Saving %s", dilemma);
         dilemmaService.save(dilemma);
     }
 
