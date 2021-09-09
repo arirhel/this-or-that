@@ -13,4 +13,5 @@ public interface DilemmaService {
 
     Optional<Dilemma> findById(String id);
 
+    void delete(String id);
 }

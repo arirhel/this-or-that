@@ -26,6 +26,8 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -116,7 +118,8 @@ class DilemmaControllerTest {
         assertNotNull(mav);
         assertEquals("dilemma/detail", mav.getViewName());
         assertEquals(new Dilemma(), mav.getModel().get("form"));
-        assertEquals(Collections.singletonList(new Candidate()), mav.getModel().get("candidates"));
+        assertEquals(Collections.singletonList(new Candidate()), mav.getModel().get("candidates"),
+          "Form generation depends on a list of at lease one candidate.");
     }
 
     @Test
@@ -196,5 +199,24 @@ class DilemmaControllerTest {
         assertNotNull(mav);
         assertEquals("dilemma/notfound", mav.getViewName());
         assertEquals("abc", mav.getModel().get("id"));
+    }
+
+    @Test
+    void verifyDilemmaDelete() throws Exception {
+        //when
+        MvcResult result = mockMvc
+          .perform(post("/dilemma/delete")
+            .param("id", "abc")
+            .param("page", "0")
+            .param("size", "10"))
+          .andExpect(status().is3xxRedirection())
+          .andReturn();
+
+        //then interactions
+        verify(mockDilemmaService, times(1)).delete("abc");
+
+        //and response
+        String redirectUrl = result.getResponse().getRedirectedUrl();
+        assertEquals("/dilemma/list?page=0&size=10", redirectUrl);
     }
 }

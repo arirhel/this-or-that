@@ -48,4 +48,9 @@ public class DilemmaServiceImpl implements DilemmaService {
         return dilemmaRepository.findById(id);
     }
 
+    @Override
+    public void delete(String id) {
+        dilemmaRepository.deleteById(id);
+    }
+
 }

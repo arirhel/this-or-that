@@ -34,7 +34,7 @@ public class DilemmaController {
      */
     private static final String QUESTION = "question";
     /**
-     *  Thymeleaf model key for a list of {@link Candidate}s
+     * Thymeleaf model key for a list of {@link Candidate}s
      */
     private static final String CANDIDATES = "candidates";
     /**
@@ -53,9 +53,8 @@ public class DilemmaController {
     }
 
     @GetMapping("/list")
-    public ModelAndView list(
-      @RequestParam(name = "page", defaultValue = "0") int page,
-      @RequestParam(name = "size", defaultValue = "10") int size) {
+    public ModelAndView list(@RequestParam(name = "page", defaultValue = "0") int page,
+                             @RequestParam(name = "size", defaultValue = "10") int size) {
         final ModelAndView modelAndView = new ModelAndView("dilemma/list");
         final Page<Dilemma> dilemmaPage = dilemmaService.findAll(page, size);
         modelAndView.addObject(DILEMMAS, dilemmaPage.getContent());
@@ -69,8 +68,7 @@ public class DilemmaController {
     @GetMapping("/create")
     public ModelAndView create() {
         final ModelAndView modelAndView = new ModelAndView("dilemma/detail");
-        modelAndView.addObject(FORM, new Dilemma()); // DTO for /save operation
-        // Placeholder to generate candidate inputs table
+        modelAndView.addObject(FORM, new Dilemma());
         modelAndView.addObject(CANDIDATES, Collections.singletonList(new Candidate()));
         return modelAndView;
     }
@@ -81,7 +79,7 @@ public class DilemmaController {
         final Optional<Dilemma> optionalDilemma = dilemmaService.findById(id);
         if (optionalDilemma.isPresent()) {
             modelAndView.setViewName("dilemma/detail");
-            modelAndView.addObject(FORM, optionalDilemma.get()); // DTO for /save operation
+            modelAndView.addObject(FORM, optionalDilemma.get());
             modelAndView.addObject(ID, optionalDilemma.get().getId());
             modelAndView.addObject(QUESTION, optionalDilemma.get().getQuestion());
             modelAndView.addObject(CANDIDATES, optionalDilemma.get().getCandidates());
@@ -105,6 +103,14 @@ public class DilemmaController {
             modelAndView.addObject(ID, id);
         }
         return modelAndView;
+    }
+
+    @PostMapping("/delete")
+    public String delete(@RequestParam(name = ID) String id,
+                         @RequestParam(name = "page", defaultValue = "0") int page,
+                         @RequestParam(name = "size", defaultValue = "10") int size) {
+        dilemmaService.delete(id);
+        return String.format("redirect:/dilemma/list?page=%s&size=%s", page, size);
     }
 
 }

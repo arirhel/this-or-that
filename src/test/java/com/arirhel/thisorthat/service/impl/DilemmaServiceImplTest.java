@@ -22,6 +22,8 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -111,6 +113,15 @@ class DilemmaServiceImplTest {
         //then
         assertTrue(result.isPresent());
         assertEquals(dilemma, result.get());
+    }
+
+    @Test
+    void delete() {
+        //when
+        dilemmaService.delete("abc");
+
+        //then
+        verify(dilemmaRepository, times(1)).deleteById("abc");
     }
 
 }
