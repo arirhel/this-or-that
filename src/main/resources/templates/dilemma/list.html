@@ -23,8 +23,13 @@
     <td><span th:text="${dilemma.question}"></span></td>
     <td><a th:href="@{/dilemma/decide(id=${dilemma.id})}">Decide</a></td>
     <td><a th:href="@{/dilemma/detail(id=${dilemma.id})}">Edit</a></td>
+    <td>
+      <form method="POST" th:action="@{/dilemma/delete(id=${dilemma.id},page=${currentPage},size=${size})}">
+        <!--todo stylize-->
+        <button type="submit" name="submit" value="value" class="link-button">Delete</button>
+      </form>
+    </td>
     <!--todo add "date added" and sort by it-->
-    <!--todo add Delete-->
   </tr>
   </tbody>
 </table>

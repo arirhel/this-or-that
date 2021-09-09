@@ -34,7 +34,7 @@ public class DilemmaController {
      */
     private static final String QUESTION = "question";
     /**
-     *  Thymeleaf model key for a list of {@link Candidate}s
+     * Thymeleaf model key for a list of {@link Candidate}s
      */
     private static final String CANDIDATES = "candidates";
     /**
@@ -53,9 +53,8 @@ public class DilemmaController {
     }
 
     @GetMapping("/list")
-    public ModelAndView list(
-      @RequestParam(name = "page", defaultValue = "0") int page,
-      @RequestParam(name = "size", defaultValue = "10") int size) {
+    public ModelAndView list(@RequestParam(name = "page", defaultValue = "0") int page,
+                             @RequestParam(name = "size", defaultValue = "10") int size) {
         final ModelAndView modelAndView = new ModelAndView("dilemma/list");
         final Page<Dilemma> dilemmaPage = dilemmaService.findAll(page, size);
         modelAndView.addObject(DILEMMAS, dilemmaPage.getContent());
@@ -104,6 +103,14 @@ public class DilemmaController {
             modelAndView.addObject(ID, id);
         }
         return modelAndView;
+    }
+
+    @PostMapping("/delete")
+    public String delete(@RequestParam(name = ID) String id,
+                         @RequestParam(name = "page", defaultValue = "0") int page,
+                         @RequestParam(name = "size", defaultValue = "10") int size) {
+        dilemmaService.delete(id);
+        return String.format("redirect:/dilemma/list?page=%s&size=%s", page, size);
     }
 
 }
